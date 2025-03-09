@@ -1,5 +1,6 @@
 package com.fernandobouchet.book_exchange.service.impl;
 
+import com.fernandobouchet.book_exchange.dto.ApiErrorResponse;
 import com.fernandobouchet.book_exchange.security.CustomUserDetailsService;
 import com.fernandobouchet.book_exchange.service.AuthenticationService;
 import io.jsonwebtoken.Claims;
@@ -31,11 +32,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public UserDetails authenticate(String email, String password) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
 
-        return customUserDetailsService.loadUserByUsername(email);
+            return customUserDetailsService.loadUserByUsername(email);
+        } catch (Error error) {
+            System.out.println(error.getMessage());
+        }
+
     }
 
     @Override
@@ -45,8 +51,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()))
-                .signWith(getSigningKey(), SignatureAlgorithm.ES256)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiryMs))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
