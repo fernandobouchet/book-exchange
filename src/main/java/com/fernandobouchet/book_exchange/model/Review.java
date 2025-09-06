@@ -13,7 +13,10 @@ import java.util.Objects;
 @Getter
 @Setter
 @Builder
-@Table(name = "reviews")
+@Table(name = "reviews",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "book_id"})
+        })
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
