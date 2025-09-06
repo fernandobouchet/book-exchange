@@ -39,12 +39,12 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(username, user.username) && Objects.equals(createdAt, user.createdAt) && Objects.equals(books, user.books);
+        return Objects.equals(id, user.id) && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, username, createdAt, books);
+        return Objects.hash(id, email);
     }
 
     @Override
@@ -52,7 +52,6 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
                 ", createdAt=" + createdAt +
                 ", books=" + books +
