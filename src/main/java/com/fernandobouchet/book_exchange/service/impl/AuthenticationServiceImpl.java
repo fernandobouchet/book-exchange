@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (Error error) {
             System.out.println(error.getMessage());
         }
-
+        return null;
     }
 
     @Override
